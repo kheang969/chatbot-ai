@@ -28,8 +28,9 @@ app.post("/chat", async (req, res) => {
     });
 
   } catch (err) {
+    // fallback message for demo
     res.json({
-      reply: "Error connecting to Ollama"
+      reply: "🤖 Demo mode: AI is running locally on developer's computer."
     });
   }
 });
