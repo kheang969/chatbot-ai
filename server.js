@@ -3,9 +3,16 @@ const cors = require("cors");
 const axios = require("axios");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
+/* HOME ROUTE (fixes Cannot GET /) */
+app.get("/", (req, res) => {
+  res.send("🤖 Chatbot server is running");
+});
+
+/* CHAT API */
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
@@ -22,11 +29,14 @@ app.post("/chat", async (req, res) => {
 
   } catch (err) {
     res.json({
-      reply: "Error: cannot connect to Ollama"
+      reply: "Error connecting to Ollama"
     });
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+/* IMPORTANT FOR RENDER */
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });
